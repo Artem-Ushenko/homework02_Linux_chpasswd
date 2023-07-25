@@ -16,16 +16,15 @@ def generator_password(length_password):
 
     return ''.join(password)
 
-
 def search_pass_user(user):
-    word = f"{user}:$*$"
+    word = f"{user}:!:"
 
     with open("/etc/shadow", "r") as file:
-        for line in enumerate(file):
-            if word in line:
-                return 0
-            else:
-                return 1
+        content = file.read()
+        if word in content:
+            return 0
+        else:
+            return 1
 
 
 user_name = input("Enter your username: ")
@@ -46,7 +45,6 @@ else:
             password = generator_password(length_password_for_user_with_no_password)
             print(f"Your password: {password}")
         else:
-            print('Password are not set in your account !!!')
             exit()
     else:
         print("Good !!! Password already exists !")
@@ -56,4 +54,4 @@ else:
             password = generator_password(length_password_for_user_with_password)
             print(f"Your password: {password}")
         else:
-            print("You already have a password. We recommend to change it !!!")
+            exit()
